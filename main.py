@@ -7,17 +7,18 @@ csv_file_path = os.path.join('temp', 'JOB_SUBMISSION.csv')
 sqlite3_db_file_path = os.path.join('temp', 'applications.db')
 sqlite3_db_ddl_file_path = os.path.join('sql', 'ddl', 'init.sql')
 #Load our data frame from the csv file
-df = pd.read_csv(csv_file_path)
+df = pd.read_csv(csv_file_path, header=0)
 
 
 #Create a function to handle date conversion
 def parse_dates(date_str):
-    for fmt in ('%m/%d/%Y %H:%M:%S', '%m/%d/%Y'):
+    for fmt in ('%Y-%m-%d %H:%M:%S', '%m/%d/%Y'):
         try:
             return pd.to_datetime(date_str, format=fmt)
         except ValueError:
             pass
     raise ValueError(f"Date format not recognized for: {date_str}")
+
 
 
 #Convert timestamp to a date format
